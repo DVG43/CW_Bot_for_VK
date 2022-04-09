@@ -14,11 +14,12 @@ def write_msg(user_id, message):
 
 
 for event in longpoll.listen():
+    # Если пришло новое сообщение
     if event.type == VkEventType.MESSAGE_NEW:
-
+         # Если оно имеет метку для меня
         if event.to_me:
             request = event.text
-
+            # Логика ответа
             if request == "привет":
                 write_msg(event.user_id, f"Хай, {event.user_id}")
             elif request == "пока":
