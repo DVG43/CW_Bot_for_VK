@@ -10,7 +10,7 @@ class VkBot:
         self._USER_ID = user_id
         self._USERNAME = self._get_user_name_from_vk_id(user_id)
 
-        self._COMMANDS = ["ПРИВЕТ", "ПOДБОР ПАРТНЕРА", "ПОКА"]
+        self._COMMANDS = ["ПРИВЕТ", "ПOДБОР", "ПОКА"]
 
     def _get_user_name_from_vk_id(self, user_id):
         request = requests.get("https://vk.com/id"+str(user_id))
@@ -24,46 +24,41 @@ class VkBot:
 
         # Привет
         if message.upper() == self._COMMANDS[0]:
-            return f"Привет-привет, {self._USERNAME}!"
-
-        # Погода
+            return f"Привет-привет, {self._USERNAME}!, если вы желаете подобрать партнера, наберите 'подбор', если " \
+                   f"не желаете наберите 'пока'"
+        # Подбор
         elif message.upper() == self._COMMANDS[1]:
-            return self._get_weather()
-
-        # Время
-        elif message.upper() == self._COMMANDS[2]:
-            return self._get_time()
-
+            return f"Вам необходимо ввести возраст (полных лет), пол (м или Ж), город, семейное положение" \
+                   f" (холост или женат/замужем), ввод одной строкой через запятую "
         # Пока
         elif message.upper() == self._COMMANDS[3]:
             return f"Пока-пока, {self._USERNAME}!"
+        elif message.upper().count(',') == 3:
+            return f"Ваш запрос принят в обработку"
 
         else:
             return "Не понимаю о чем вы..."
 
 
+    @staticmethod
+    def _clean_all_tag_from_str(string_line):
 
-    # @staticmethod
-    # def _clean_all_tag_from_str(string_line):
-    #
-    #     """
-    #     Очистка строки stringLine от тэгов и их содержимых
-    #     :param string_line: Очищаемая строка
-    #     :return: очищенная строка
-    #     """
-    #
-    #     result = ""
-    #     not_skip = True
-    #     for i in list(string_line):
-    #         if not_skip:
-    #             if i == "<":
-    #                 not_skip = False
-    #             else:
-    #                 result += i
-    #         else:
-    #             if i == ">":
-    #                 not_skip = True
-    #
-    #     return result
+        # Очистка строки stringLine от тэгов и их содержимых
+        # :param string_line: Очищаемая строка
+        # :return: очищенная строка
+
+        result = ""
+        not_skip = True
+        for i in list(string_line):
+            if not_skip:
+                if i == "<":
+                    not_skip = False
+                else:
+                    result += i
+            else:
+                if i == ">":
+                    not_skip = True
+
+        return result
 
 

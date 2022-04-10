@@ -22,7 +22,7 @@ if __name__ == '__main__':
 
     # Работа с сообщениями
     longpoll = VkLongPoll(vk)
-
+    start_conditions = ""
     #commander = Commander()
     print("Server started")
     for event in longpoll.listen():
@@ -31,9 +31,9 @@ if __name__ == '__main__':
             if event.to_me:
                 print(f'Сообщение от  {event.user_id}', end='')
                 bot = VkBot(event.user_id)
-                if event.text[0] == "/":
-                    write_msg(event.user_id, commander.do(event.text[1::]))
-                else:
-                    write_msg(event.user_id, bot.new_message(event.text))
+                write_msg(event.user_id, bot.new_message(event.text))
                 print('Text: ', event.text)
                 print("-------------------")
+                if event.text.count(',') == 3:
+                    start_conditions += event.text
+    print(start_conditions)
