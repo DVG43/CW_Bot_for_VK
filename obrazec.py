@@ -10,7 +10,7 @@ longpoll = VkLongPoll(vk)
 
 
 def write_msg(user_id, message):
-    vk.method('messages.send', {'user_id': user_id, 'message': message,  'random_id': randrange(10 ** 7),})
+    vk.method('messages.send', {'user_id': user_id, 'message': message,  'random_id': randrange(10 ** 7)})
 
 
 for event in longpoll.listen():
@@ -21,8 +21,10 @@ for event in longpoll.listen():
             request = event.text
             # Логика ответа
             if request == "привет":
-                write_msg(event.user_id, f"Хай, {event.user_id}")
-            elif request == "пока":
+                write_msg(event.user_id, f"Хай, {event.user_id}, хотел бы подобрать партнера для общения ? да/нет")
+            elif request == "да":
+                write_msg(event.user_id, "Неоходимо внести возраст, пол, город, семейное положение ")
+            elif request == "нет":
                 write_msg(event.user_id, "Пока((")
             else:
                 write_msg(event.user_id, "Не поняла вашего ответа...")
