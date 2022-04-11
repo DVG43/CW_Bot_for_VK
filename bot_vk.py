@@ -10,7 +10,7 @@ class VkBot:
         self._USER_ID = user_id
         self._USERNAME = self._get_user_name_from_vk_id(user_id)
 
-        self._COMMANDS = ["ПРИВЕТ", "ПOДБОР", "ПОКА"]
+        self._COMMANDS = ["ПРИВЕТ", "ПОДБОР", "ПОКА"]
 
     def _get_user_name_from_vk_id(self, user_id):
         request = requests.get("https://vk.com/id"+str(user_id))
@@ -31,7 +31,7 @@ class VkBot:
             return f"Вам необходимо ввести возраст (полных лет), пол (м или Ж), город, семейное положение" \
                    f" (холост или женат/замужем), ввод одной строкой через запятую "
         # Пока
-        elif message.upper() == self._COMMANDS[3]:
+        elif message.upper() == self._COMMANDS[2]:
             return f"Пока-пока, {self._USERNAME}!"
         elif message.upper().count(',') == 3:
             return f"Ваш запрос принят в обработку"
