@@ -19,8 +19,13 @@
 # print(count_reposts)
 # print(url_str)
 
-list_liks = [23,34,12,3,45,66,8]
-sort_list_liks = sorted(list_liks)
-print(sort_list_liks)
-sort_list_liks[:-3] = []
-print(sort_list_liks)
+# list_liks = [23,34,12,3,45,66,8]
+# sort_list_liks = sorted(list_liks)
+# print(sort_list_liks)
+# sort_list_liks[:-3] = []
+# print(sort_list_liks)
+
+
+a = 2
+a += 5
+print(a)

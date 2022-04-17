@@ -1,6 +1,6 @@
 import bs4 as bs4
 import requests
-
+from work_with_Api import search_piople_foto
 
 class VkBot:
 
@@ -29,12 +29,13 @@ class VkBot:
         # Подбор
         elif message.upper() == self._COMMANDS[1]:
             return f"Вам необходимо ввести возраст (полных лет), пол (м или Ж), город, семейное положение" \
-                   f" (холост или женат/замужем), ввод одной строкой через запятую "
+                   f" (женат/замужем или не женат/не замужем или в активном поиске), ввод одной строкой через запятую "
         # Пока
         elif message.upper() == self._COMMANDS[2]:
             return f"Пока-пока, {self._USERNAME}!"
         elif message.upper().count(',') == 3:
-            return f"Ваш запрос принят в обработку"
+            resalt_of_search = search_piople_foto(message.upper())
+            return f"Результат поисков следующие люди и их фото :  {resalt_of_search}"
 
         else:
             return "Не понимаю о чем вы..."
