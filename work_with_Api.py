@@ -53,12 +53,12 @@ def foto_dict_person (fotolist):
              short_foto_str += f"{foto['url']}"
 
 
-     return short_foto_str
+    return short_foto_str
 
 
 def search_piople_foto(string_date):
     start_list = string_date.split(',')
-    year_of_birth = 2022 - start_list[0]
+    year_of_birth = 2022 - int(start_list[0])
     if start_list[1] == 'ж' or 'w' or 'female' or 'f':
         index_sex = 1
     elif start_list[1] == 'м' or 'm' or 'male' or 'man':
