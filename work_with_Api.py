@@ -3,7 +3,7 @@ import vk_api
 
 # по полученным данным определяем кандидатов
 def serch_users(year_birth, sex, city, status):
-    token_owner = '********************************'
+    token_owner = 'bbd774526f704f2e80829308a186eea43f1e72ceb27f227a859ee67fb12788d8ecfa967c8a87facfdc69d'
     vk_session = vk_api.VkApi(token=token_owner, api_version='5.131')
     get_users = vk_api.VkTools(vk_session)
 
@@ -19,7 +19,7 @@ def serch_users(year_birth, sex, city, status):
 
 #получаем все доступные фото кандидатов.
 def serch_photo_for_person (person_id):
-    token_owner = '31f694b775b4be9a77eff1847b90175f8816a09ece569f2c41185c3d2da99a6cd826562dc4b3a5e46d19a'
+    token_owner = 'bbd774526f704f2e80829308a186eea43f1e72ceb27f227a859ee67fb12788d8ecfa967c8a87facfdc69d'
     vk_session = vk_api.VkApi(token=token_owner, api_version='5.131')
     get_photo = vk_api.VkTools(vk_session)
     resalt_photo = get_photo.get_all('photos.getAll', 3,
