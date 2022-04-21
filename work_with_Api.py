@@ -17,7 +17,7 @@ def serch_users(year_birth, sex, city, status):
                                     )
     return response
 
-#получаем все доступные фото кандидатов.
+#получаем все доступные фото кандидатов.photos.getProfile photos.getAll
 def serch_photo_for_person (person_id):
     token_owner = 'b46a44cdd583b2cc46fa9e43c498c028975b8817c7a33aa5dbaa6a6fb751db00ccaf41586525a13db7891'
     vk_session = vk_api.VkApi(token=token_owner, api_version='5.131')
