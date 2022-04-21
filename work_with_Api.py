@@ -3,7 +3,7 @@ import vk_api
 
 # по полученным данным определяем кандидатов
 def serch_users(year_birth, sex, city, status):
-    token_owner = 'bbd774526f704f2e80829308a186eea43f1e72ceb27f227a859ee67fb12788d8ecfa967c8a87facfdc69d'
+    token_owner = 'b46a44cdd583b2cc46fa9e43c498c028975b8817c7a33aa5dbaa6a6fb751db00ccaf41586525a13db7891'
     vk_session = vk_api.VkApi(token=token_owner, api_version='5.131')
     get_users = vk_api.VkTools(vk_session)
 
@@ -19,14 +19,17 @@ def serch_users(year_birth, sex, city, status):
 
 #получаем все доступные фото кандидатов.
 def serch_photo_for_person (person_id):
-    token_owner = 'bbd774526f704f2e80829308a186eea43f1e72ceb27f227a859ee67fb12788d8ecfa967c8a87facfdc69d'
+    token_owner = 'b46a44cdd583b2cc46fa9e43c498c028975b8817c7a33aa5dbaa6a6fb751db00ccaf41586525a13db7891'
     vk_session = vk_api.VkApi(token=token_owner, api_version='5.131')
     get_photo = vk_api.VkTools(vk_session)
-    resalt_photo = get_photo.get_all('photos.getAll', 3,
-                                     {'owner_id': person_id,
-                                      'extended': 1
-                                      }
-                                     )
+    try:
+        resalt_photo = get_photo.get_all('photos.getAll', 3,
+                                             {'owner_id': person_id,
+                                              'extended': 1
+                                              }
+                                             )
+    except:
+        return "закрытый профиль"
     return resalt_photo['items']
 
 # выбираем нужные нам фото
@@ -81,9 +84,13 @@ def search_piople_foto(string_date):
     for person in list_piople:
         id_for_person = str(person['id'])
         list_of_foto = serch_photo_for_person(id_for_person)
-        fotos = foto_dict_person(list_of_foto)
-        result_str += f" Имя {person['first_name']}"
-        result_str += f" Фамилия {person['last_name']}"
-        result_str += f" и фотографии {fotos} /// "
+        if list_of_foto == "закрытый профиль":
+            result_str += "закрытый профиль"
+            continue
+        else:
+            fotos = foto_dict_person(list_of_foto)
+            result_str += f" Имя {person['first_name']}"
+            result_str += f" Фамилия {person['last_name']}"
+            result_str += f" и фотографии {fotos} /// "
 
     return result_str
