@@ -1,4 +1,6 @@
 import vk_api
+import time
+import requests
 
 
 # по полученным данным определяем кандидатов
@@ -17,20 +19,39 @@ def serch_users(year_birth, sex, city, status):
                                     )
     return response
 
+
+
 #получаем все доступные фото кандидатов.photos.getProfile photos.getAll
 def serch_photo_for_person (person_id):
     token_owner = 'b46a44cdd583b2cc46fa9e43c498c028975b8817c7a33aa5dbaa6a6fb751db00ccaf41586525a13db7891'
-    vk_session = vk_api.VkApi(token=token_owner, api_version='5.131')
-    get_photo = vk_api.VkTools(vk_session)
-    try:
-        resalt_photo = get_photo.get_all('photos.getAll', 3,
-                                             {'owner_id': person_id,
-                                              'extended': 1
-                                              }
-                                             )
-    except:
-        return "закрытый профиль"
-    return resalt_photo['items']
+    # vk_session = vk_api.VkApi(token=token_owner, api_version='5.131')
+    # get_photo = vk_api.VkTools(vk_session)
+    # #try:
+    # resalt_photo = get_photo.get_all('photos.getProfile', 10,
+    #                                  {'owner_id': person_id,
+    #                                   'album_id': 'profile',
+    #                                   'extended': 1
+    #                                   }
+    #                                  )
+    # # except:
+    # #     return "закрытый профиль"
+    # return resalt_photo['items']
+
+    URL = 'https://api.vk.com/method/photos.getAll'  # Получение фото
+    params = {
+        'owner_id': person_id,
+        'album_id': 'profile',
+        'extended': 1,
+        'photo_sizes': 0,
+        'access_token': token_owner,
+        'v': '5.131'
+    }
+    fotos = requests.get(URL, params=params)
+    resalt_foto = fotos.json()
+    print(resalt_foto)
+    return resalt_foto  #['items']
+
+#resalt_photo = get_photo.get_all('photos.get', 10,
 
 # выбираем нужные нам фото
 def foto_dict_person (fotolist):
@@ -71,7 +92,7 @@ def search_piople_foto(string_date):
     city = start_list[2]
     if start_list[3] == 'не женат' or 'не замужем':
         index_status = 1
-    elif start_list[3] == 'не женат' or 'не замужем':
+    elif start_list[3] == 'женат' or 'замужем':
         index_status = 4
     elif start_list[3] == 'в активном поиске':
         index_status = 6
@@ -84,6 +105,7 @@ def search_piople_foto(string_date):
     for person in list_piople:
         id_for_person = str(person['id'])
         list_of_foto = serch_photo_for_person(id_for_person)
+        time.sleep(5)
         if list_of_foto == "закрытый профиль":
             result_str += "закрытый профиль"
             continue

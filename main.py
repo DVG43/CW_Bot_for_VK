@@ -37,5 +37,5 @@ if __name__ == '__main__':
                 if event.text.count(',') == 3:
                     start_conditions += event.text
                     break
-    print(start_conditions)
-    start_list = start_conditions.split(',')
+        print(start_conditions)
+        #start_list = start_conditions.split(',')
