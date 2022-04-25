@@ -1,6 +1,6 @@
 import vk_api
 import time
-import requests
+# import requests
 
 
 # по полученным данным определяем кандидатов
@@ -24,32 +24,33 @@ def serch_users(year_birth, sex, city, status):
 #получаем все доступные фото кандидатов.photos.getProfile photos.getAll
 def serch_photo_for_person (person_id):
     token_owner = 'b46a44cdd583b2cc46fa9e43c498c028975b8817c7a33aa5dbaa6a6fb751db00ccaf41586525a13db7891'
-    # vk_session = vk_api.VkApi(token=token_owner, api_version='5.131')
-    # get_photo = vk_api.VkTools(vk_session)
-    # #try:
-    # resalt_photo = get_photo.get_all('photos.getProfile', 10,
-    #                                  {'owner_id': person_id,
-    #                                   'album_id': 'profile',
-    #                                   'extended': 1
-    #                                   }
-    #                                  )
-    # # except:
-    # #     return "закрытый профиль"
-    # return resalt_photo['items']
+    vk_session = vk_api.VkApi(token=token_owner, api_version='5.131')
+    get_photo = vk_api.VkTools(vk_session)
+    try:
+        resalt_photo = get_photo.get_all('photos.getProfile', 10,
+                                         {'owner_id': person_id,
+                                          'album_id': 'profile',
+                                           'extended': 1
+                                          }
+                                         )
+    except:
+        return "закрытый профиль"
+    return resalt_photo['items']    # URL = 'https://api.vk.com/method/photos.getAll'  # Получение фото
 
-    URL = 'https://api.vk.com/method/photos.getAll'  # Получение фото
-    params = {
-        'owner_id': person_id,
-        'album_id': 'profile',
-        'extended': 1,
-        'photo_sizes': 0,
-        'access_token': token_owner,
-        'v': '5.131'
-    }
-    fotos = requests.get(URL, params=params)
-    resalt_foto = fotos.json()
-    print(resalt_foto)
-    return resalt_foto  #['items']
+    #     # params = {
+    #     #     'owner_id': person_id,
+    #     #     'album_id': 'profile',
+    #     #     'extended': 1,
+    #     #     'photo_sizes': 0,
+    #     #     'access_token': token_owner,
+    #     #     'v': '5.131'
+    #     # }
+    #     # fotos = requests.get(URL, params=params)
+    #     # resalt_foto = fotos.json()
+    #     # print(resalt_foto)
+    #     # return resalt_foto  #['items']
+
+
 
 #resalt_photo = get_photo.get_all('photos.get', 10,
 
