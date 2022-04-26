@@ -102,6 +102,8 @@ def search_piople_foto(string_date):
     list_piople = serch_users(year_of_birth, index_sex, city, index_status)['items']
     print(list_piople)
 
+
+
     result_str = ''
     for person in list_piople:
         id_for_person = str(person['id'])
