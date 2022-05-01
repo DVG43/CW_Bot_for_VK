@@ -1,9 +1,5 @@
 import psycopg2
 import sqlalchemy
-#from pprint import pprint
-import work_with_Api
-
-
 
 
 def writing_to_bd(list_of_start):
@@ -56,7 +52,7 @@ def cheking_dubles(cheking_list):
         if person_1['id'] in list_of_idvk:
             continue
         else:
-            cheiging_list.append[person_1]
+            cheiging_list.append(person_1)
     return cheiging_list
 
 

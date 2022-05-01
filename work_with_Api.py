@@ -1,7 +1,7 @@
 import vk_api
 import time
 # import requests
-
+from BD_for_curswork import writing_to_bd, reading_id_str, foming_data_list, cheking_dubles
 
 # по полученным данным определяем кандидатов
 def serch_users(year_birth, sex, city, status):
@@ -81,6 +81,24 @@ def foto_dict_person (fotolist):
     return short_foto_str
 
 
+def maiking_resalt(data_list):
+    result_str = ''
+    for person in data_list:
+        id_for_person = str(person['id'])
+        list_of_foto = serch_photo_for_person(id_for_person)
+        time.sleep(5)
+        if list_of_foto == "закрытый профиль":
+            result_str += "закрытый профиль"
+            continue
+        else:
+            fotos = foto_dict_person(list_of_foto)
+            result_str += f" Имя {person['first_name']}"
+            result_str += f" Фамилия {person['last_name']}"
+            result_str += f" и фотографии {fotos} /// "
+
+    return result_str
+
+
 def search_piople_foto(string_date):
     start_list = string_date.split(',')
     year_of_birth = 2022 - int(start_list[0])
@@ -102,20 +120,36 @@ def search_piople_foto(string_date):
     list_piople = serch_users(year_of_birth, index_sex, city, index_status)['items']
     print(list_piople)
 
+    last_namber = reading_id_str()  #Работа с БД
+    if last_namber == 1:
+       start_list =  foming_data_list(list_piople,1) #Работа с БД
+       writing_to_bd(start_list) #Работа с БД
+       return maiking_resalt(list_piople)
+
+    else:
+        new_list_piople = cheking_dubles(list_piople)  # функции проверки и отсева на совпадение ID
+        start_list = foming_data_list(list_piople, last_namber)  # Работа с БД
+        writing_to_bd(start_list)  # Работа с БД
+        return maiking_resalt(new_list_piople)
 
 
-    result_str = ''
-    for person in list_piople:
-        id_for_person = str(person['id'])
-        list_of_foto = serch_photo_for_person(id_for_person)
-        time.sleep(5)
-        if list_of_foto == "закрытый профиль":
-            result_str += "закрытый профиль"
-            continue
-        else:
-            fotos = foto_dict_person(list_of_foto)
-            result_str += f" Имя {person['first_name']}"
-            result_str += f" Фамилия {person['last_name']}"
-            result_str += f" и фотографии {fotos} /// "
 
-    return result_str
+
+
+
+
+    # result_str = ''
+    # for person in list_piople:
+    #     id_for_person = str(person['id'])
+    #     list_of_foto = serch_photo_for_person(id_for_person)
+    #     time.sleep(5)
+    #     if list_of_foto == "закрытый профиль":
+    #         result_str += "закрытый профиль"
+    #         continue
+    #     else:
+    #         fotos = foto_dict_person(list_of_foto)
+    #         result_str += f" Имя {person['first_name']}"
+    #         result_str += f" Фамилия {person['last_name']}"
+    #         result_str += f" и фотографии {fotos} /// "
+    #
+    # return result_str
