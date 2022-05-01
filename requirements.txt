@@ -1,0 +1,6 @@
+random
+vk_api
+bs4
+requests
+time
+sqlalchemy
