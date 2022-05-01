@@ -21,7 +21,8 @@ def reading_id_str():
     list_of_id = connection.execute("""
     SELECT idusers FROM users ;
     """).fetchall()
-    return list_of_id[-1][0]
+    #print(list_of_id)
+    return list_of_id
 
 
 def foming_data_list(data_list, numer):

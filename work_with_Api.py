@@ -121,7 +121,7 @@ def search_piople_foto(string_date):
     print(list_piople)
 
     last_namber = reading_id_str()  #Работа с БД
-    if last_namber == 1:
+    if len(last_namber) < 1:
        start_list =  foming_data_list(list_piople,1) #Работа с БД
        writing_to_bd(start_list) #Работа с БД
        return maiking_resalt(list_piople)
