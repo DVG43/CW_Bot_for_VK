@@ -1,6 +1,6 @@
 import psycopg2
 import sqlalchemy
-from pprint import pprint
+#from pprint import pprint
 import work_with_Api
 
 
@@ -28,7 +28,42 @@ def reading_id_str():
     return list_of_id[-1][0]
 
 
-reading_id_str()
+def foming_data_list(data_list, numer):
+    id_str = numer
+    data_list = []
+    for person in data_list:
+        a = id_str
+        b = person ['id']
+        c = f"{ person ['first_name']}"
+        d = f"{ person ['last_name']}"
+        data_tupie = (a, b, c, d)
+        data_list.append(data_tupie)
+        id_str += 1
+    return data_list
+
+
+def cheking_dubles(cheking_list):
+    db = 'postgresql://py48galuta:1624@localhost:5432/postgres'  # читаем какой последний номер в столбце
+
+    engine = sqlalchemy.create_engine(db)
+    connection = engine.connect()
+
+    list_of_idvk = connection.execute("""
+        SELECT idvk FROM users ;
+        """).fetchall()
+    cheiging_list = []
+    for person_1 in cheking_list:
+        if person_1['id'] in list_of_idvk:
+            continue
+        else:
+            cheiging_list.append[person_1]
+    return cheiging_list
+
+
+
+
+
+#reading_id_str()
 
 # list = [(1, 2, '{иван}', '{петров}'), (2, 3, '{сергей}', '{жирнов}')]
 # # writing_to_bd(list)
